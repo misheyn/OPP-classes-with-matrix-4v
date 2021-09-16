@@ -2,15 +2,15 @@
 // Created by Amalia on 09.09.2021.
 //
 
-#include "MatrixClass.h"
+#include "Matrix.h"
 #include <iostream>
 
-MatrixClass::MatrixClass() {
+Matrix::Matrix() {
     order = 0;
     matrix = nullptr;
 }
 
-MatrixClass::MatrixClass(int order) {
+Matrix::Matrix(int order) {
     this->order = order;
     this->matrix = new int *[order];
     for (int i = 0; i < order; i++) {
@@ -21,7 +21,7 @@ MatrixClass::MatrixClass(int order) {
             matrix[i][j] = 0;
 }
 
-MatrixClass::MatrixClass(const MatrixClass &matrix_2) {
+Matrix::Matrix(const Matrix &matrix_2) {
     this->order = matrix_2.order;
     this->matrix = new int *[matrix_2.order];
     for (int i = 0; i < order; i++) {
@@ -32,25 +32,26 @@ MatrixClass::MatrixClass(const MatrixClass &matrix_2) {
             matrix[i][j] = matrix_2.matrix[i][j];
 }
 
-MatrixClass::~MatrixClass() {
+Matrix::~Matrix() {
     for (int i = 0; i < order; i++) {
         delete[] matrix[i];
     }
     delete[] matrix;
 }
 
-int MatrixClass::GetMatrix(int i, int j) const {
+int Matrix::GetMatrix(int i, int j) const {
     return matrix[i][j];
 }
 
-void MatrixClass::SetMatrix(int i, int j, int value) {
+void Matrix::SetMatrix(int i, int j, int value) {
     matrix[i][j] = value;
 }
 
-char *MatrixClass::toString() const {
-    char *buf = new char[100];
-    *buf = '\0';
-    int len = 0;
+char *Matrix::toString() const {
+    int l, len;
+    l = digitCount(this->matrix, this->order);
+    char *buf = new char[l + order * order];
+    len = 0;
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             len += std::sprintf(buf + len * sizeof(char), "%d", matrix[i][j]);
@@ -68,8 +69,8 @@ char *MatrixClass::toString() const {
     return buf;
 }
 
-void MatrixClass::TransposeMatrix() {
-    MatrixClass other(order);
+void Matrix::TransposeMatrix() {
+    Matrix other(order);
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             other.matrix[i][j] = this->matrix[j][i];
@@ -82,8 +83,8 @@ void MatrixClass::TransposeMatrix() {
     }
 }
 
-MatrixClass MatrixClass::operator+(const MatrixClass &matrix_2) {
-    MatrixClass temp(order);
+Matrix Matrix::operator+(const Matrix &matrix_2) {
+    Matrix temp(order);
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             temp.matrix[i][j] = this->matrix[i][j] + matrix_2.matrix[i][j];
@@ -92,11 +93,11 @@ MatrixClass MatrixClass::operator+(const MatrixClass &matrix_2) {
     return temp;
 }
 
-int MatrixClass::strCat(char *buf, int len, char elem) {
+int Matrix::strCat(char *buf, int len, char elem) {
     return std::sprintf(buf + len * sizeof(char), "%c", elem);
 }
 
-MatrixClass &MatrixClass::operator=(const MatrixClass &matrix_2) {
+Matrix &Matrix::operator=(const Matrix &matrix_2) {
     this->order = matrix_2.order;
     if (this->matrix != nullptr) {
         for (int i = 0; i < order; i++) {
@@ -114,4 +115,24 @@ MatrixClass &MatrixClass::operator=(const MatrixClass &matrix_2) {
         }
     }
     return *this;
+}
+
+int Matrix::digitCount(int **_matrix, int _order) {
+    Matrix other(_order);
+    for (int i = 0; i < _order; i++) {
+        for (int j = 0; j < _order; j++) {
+            other.matrix[i][j] = _matrix[j][i];
+        }
+    }
+    int len;
+    len = 0;
+    for (int i = 0; i < _order; i++) {
+        for (int j = 0; j < _order; j++) {
+            while (other.matrix[i][j] > 0) {
+                len++;
+                other.matrix[i][j] = other.matrix[i][j] / 10;
+            }
+        }
+    }
+    return len;
 }
