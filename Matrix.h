@@ -5,7 +5,6 @@
 #ifndef LAB1_3_MATRIX_H
 #define LAB1_3_MATRIX_H
 
-
 class Matrix {
 public:
     Matrix();
@@ -27,6 +26,8 @@ public:
     Matrix operator+(const Matrix &matrix_2);
 
     Matrix &operator=(const Matrix &matrix_2);
+
+    int &operator()(int i, int j);
 
 private:
     int order;

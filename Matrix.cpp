@@ -49,6 +49,7 @@ void Matrix::SetMatrix(int i, int j, int value) {
 
 char *Matrix::toString() const {
     int l, len;
+    if (matrix == nullptr) return nullptr;
     l = digitCount(this->matrix, this->order);
     char *buf = new char[l + order * order];
     len = 0;
@@ -135,4 +136,8 @@ int Matrix::digitCount(int **_matrix, int _order) {
         }
     }
     return len;
+}
+
+int &Matrix::operator()(int i, int j) {
+    return *matrix[i];
 }
