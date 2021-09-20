@@ -12,7 +12,6 @@ int main() {
     return 0;
 }
 
-
 TEST_CASE("MatrixClass tests", "[Square]") {
     Matrix t;
     REQUIRE(t.toString() == nullptr);
@@ -26,12 +25,12 @@ TEST_CASE("MatrixClass tests", "[Square]") {
             k++;
         }
     }
-    REQUIRE(strcmp("3 7\n12 9", a.toString()) == 0);
+    REQUIRE(strcmp(a.toString(), "3 7\n12 9") == 0);
     Matrix A(a);
     REQUIRE(strcmp(A.toString(), a.toString()) == 0);
     REQUIRE(a.GetMatrix(0, 0) == 3);
     a.TransposeMatrix();
-    REQUIRE(strcmp("3 12\n7 9", a.toString()) == 0);
+    REQUIRE(strcmp(a.toString(), "3 12\n7 9") == 0);
     Matrix b(2);
     k = 0;
     for (int i = 0; i < 2; i++) {
@@ -44,4 +43,8 @@ TEST_CASE("MatrixClass tests", "[Square]") {
     c = a + b;
     REQUIRE(strcmp(c.toString(), "4 67\n9 78") == 0);
     REQUIRE(c(1, 0) == 9);
+    REQUIRE(c() == -291);
+    Matrix d;
+    d = b - a;
+    REQUIRE(strcmp(d.toString(), "-2 43\n-5 60") == 0);
 }

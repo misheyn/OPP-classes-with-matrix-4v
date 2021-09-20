@@ -6,6 +6,7 @@
 #define LAB1_3_MATRIX_H
 
 class Matrix {
+
 public:
     Matrix();
 
@@ -15,26 +16,31 @@ public:
 
     ~Matrix();
 
-    int GetMatrix(int i, int j) const;
+    double GetMatrix(int i, int j) const;
 
     void SetMatrix(int i, int j, int value);
 
-    char *toString() const;
+    char *toString();
 
     void TransposeMatrix();
 
-    Matrix operator+(const Matrix &matrix_2);
+    friend Matrix operator+(const Matrix &m_1, const Matrix &m_2);
+
+    friend Matrix operator-(const Matrix &m_1, const Matrix &m_2);
 
     Matrix &operator=(const Matrix &matrix_2);
 
-    int &operator()(int i, int j);
+    double &operator()(int i, int j);
+
+    double operator()();
 
 private:
     int order;
-    int **matrix;
+    double **matrix;
 
     static int strCat(char *buf, int len, char elem);
-    static int digitCount(int** _matrix, int _order);
+
+    static int digitCount(double **_matrix, int _order);
 };
 
 #endif //LAB1_3_MATRIX_H
