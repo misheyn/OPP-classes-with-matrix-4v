@@ -7,6 +7,7 @@
 
 
 class Matrix {
+
 public:
     Matrix();
 
@@ -33,7 +34,8 @@ private:
     int **matrix;
 
     static int strCat(char *buf, int len, char elem);
-    static int digitCount(int** _matrix, int _order);
+
+    static int digitCount(int **_matrix, int _order);
 };
 
 #endif //LAB1_3_MATRIX_H

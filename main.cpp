@@ -14,7 +14,7 @@ int main() {
 
 TEST_CASE("MatrixClass tests", "[Square]") {
     Matrix t;
-    REQUIRE(strcmp("\0", t.toString()) == 0);
+    REQUIRE(t.toString() == nullptr);
     Matrix a(2);
     int arr_a[4] = {3, 7, 12, 9};
     int arr_b[4] = {1, 55, 2, 69};

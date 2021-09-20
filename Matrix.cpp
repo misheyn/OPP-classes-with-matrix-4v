@@ -6,41 +6,41 @@
 #include <iostream>
 
 Matrix::Matrix() {
-    order = 0;
-    matrix = nullptr;
+    this->order = 0;
+    this->matrix = nullptr;
 }
 
 Matrix::Matrix(int order) {
     this->order = order;
     this->matrix = new int *[order];
     for (int i = 0; i < order; i++) {
-        matrix[i] = new int[order];
+        this->matrix[i] = new int[order];
     }
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
-            matrix[i][j] = 0;
+            this->matrix[i][j] = 0;
 }
 
 Matrix::Matrix(const Matrix &matrix_2) {
     this->order = matrix_2.order;
     this->matrix = new int *[matrix_2.order];
     for (int i = 0; i < order; i++) {
-        matrix[i] = new int[matrix_2.order];
+        this->matrix[i] = new int[matrix_2.order];
     }
     for (int i = 0; i < matrix_2.order; i++)
         for (int j = 0; j < matrix_2.order; j++)
-            matrix[i][j] = matrix_2.matrix[i][j];
+            this->matrix[i][j] = matrix_2.matrix[i][j];
 }
 
 Matrix::~Matrix() {
     for (int i = 0; i < order; i++) {
-        delete[] matrix[i];
+        delete[] this->matrix[i];
     }
-    delete[] matrix;
+    delete[] this->matrix;
 }
 
 int Matrix::GetMatrix(int i, int j) const {
-    return matrix[i][j];
+    return this->matrix[i][j];
 }
 
 void Matrix::SetMatrix(int i, int j, int value) {
@@ -49,6 +49,7 @@ void Matrix::SetMatrix(int i, int j, int value) {
 
 char *Matrix::toString() const {
     int l, len;
+    if (this->matrix == nullptr) return nullptr;
     l = digitCount(this->matrix, this->order);
     char *buf = new char[l + order * order];
     len = 0;
@@ -70,7 +71,7 @@ char *Matrix::toString() const {
 }
 
 void Matrix::TransposeMatrix() {
-    Matrix other(order);
+    Matrix other(this->order);
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             other.matrix[i][j] = this->matrix[j][i];
@@ -98,20 +99,20 @@ int Matrix::strCat(char *buf, int len, char elem) {
 }
 
 Matrix &Matrix::operator=(const Matrix &matrix_2) {
-    this->order = matrix_2.order;
-    if (this->matrix != nullptr) {
+    if (this != &matrix_2) {
         for (int i = 0; i < order; i++) {
             delete[] this->matrix[i];
         }
         delete[] this->matrix;
-    }
-    this->matrix = new int *[matrix_2.order];
-    for (int i = 0; i < order; i++) {
-        matrix[i] = new int[matrix_2.order];
-    }
-    for (int i = 0; i < matrix_2.order; i++) {
-        for (int j = 0; j < matrix_2.order; j++) {
-            matrix[i][j] = matrix_2.matrix[i][j];
+        this->order = matrix_2.order;
+        this->matrix = new int *[matrix_2.order];
+        for (int i = 0; i < order; i++) {
+            this->matrix[i] = new int[matrix_2.order];
+        }
+        for (int i = 0; i < matrix_2.order; i++) {
+            for (int j = 0; j < matrix_2.order; j++) {
+                this->matrix[i][j] = matrix_2.matrix[i][j];
+            }
         }
     }
     return *this;
