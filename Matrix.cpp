@@ -4,7 +4,8 @@
 
 #include "Matrix.h"
 #include <cmath>
-#include <iostream>
+#include <stdexcept>
+using namespace std;
 
 Matrix::Matrix() {
     this->order = 0;
@@ -12,10 +13,13 @@ Matrix::Matrix() {
 }
 
 Matrix::Matrix(int order) {
+    if (order < 1) throw invalid_argument("Incorrect matrix order");
     this->order = order;
     this->matrix = new double *[order];
+    if (this->matrix == nullptr) throw "Memory denied";
     for (int i = 0; i < order; i++) {
         this->matrix[i] = new double[order];
+        if (this->matrix[i] == nullptr) throw "Memory denied";
     }
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
