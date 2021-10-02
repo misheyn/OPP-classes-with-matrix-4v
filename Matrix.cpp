@@ -5,6 +5,7 @@
 #include "Matrix.h"
 #include <cmath>
 #include <stdexcept>
+
 using namespace std;
 
 Matrix::Matrix() {
@@ -13,13 +14,13 @@ Matrix::Matrix() {
 }
 
 Matrix::Matrix(int order) {
-    if (order < 1) throw invalid_argument("Incorrect matrix order");
+    if (order < 1 || isalpha((char)order)) throw invalid_argument("Incorrect matrix order");
     this->order = order;
     this->matrix = new double *[order];
-    if (this->matrix == nullptr) throw "Memory denied";
+    //if (this->matrix == nullptr) throw "Memory denied";
     for (int i = 0; i < order; i++) {
         this->matrix[i] = new double[order];
-        if (this->matrix[i] == nullptr) throw "Memory denied";
+        //if (this->matrix[i] == nullptr) throw "Memory denied";
     }
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
@@ -49,7 +50,7 @@ double Matrix::GetMatrix(int i, int j) const {
 }
 
 void Matrix::SetMatrix(int i, int j, int value) {
-    matrix[i][j] = value;
+    this->matrix[i][j] = value;
 }
 
 char *Matrix::toString() {
@@ -89,48 +90,8 @@ void Matrix::TransposeMatrix() {
     }
 }
 
-Matrix operator+(const Matrix &m_1, const Matrix &m_2) {
-    Matrix temp(m_1.order);
-    for (int i = 0; i < m_1.order; i++) {
-        for (int j = 0; j < m_1.order; j++) {
-            temp.matrix[i][j] = m_1.matrix[i][j] + m_2.matrix[i][j];
-        }
-    }
-    return temp;
-}
-
-Matrix operator-(const Matrix &m_1, const Matrix &m_2) {
-    Matrix temp(m_1.order);
-    for (int i = 0; i < m_1.order; i++) {
-        for (int j = 0; j < m_1.order; j++) {
-            temp.matrix[i][j] = m_1.matrix[i][j] - m_2.matrix[i][j];
-        }
-    }
-    return temp;
-}
-
 int Matrix::strCat(char *buf, int len, char elem) {
     return std::sprintf(buf + len * sizeof(char), "%c", elem);
-}
-
-Matrix &Matrix::operator=(const Matrix &new_m) {
-    if (this != &new_m) {
-        for (int i = 0; i < order; i++) {
-            delete[] this->matrix[i];
-        }
-        delete[] this->matrix;
-        this->order = new_m.order;
-        this->matrix = new double *[new_m.order];
-        for (int i = 0; i < order; i++) {
-            this->matrix[i] = new double[new_m.order];
-        }
-        for (int i = 0; i < new_m.order; i++) {
-            for (int j = 0; j < new_m.order; j++) {
-                this->matrix[i][j] = new_m.matrix[i][j];
-            }
-        }
-    }
-    return *this;
 }
 
 int Matrix::digitCount(double **_matrix, int _order) {
@@ -151,6 +112,46 @@ int Matrix::digitCount(double **_matrix, int _order) {
         }
     }
     return len;
+}
+
+Matrix operator+(const Matrix &m_1, const Matrix &m_2) {
+    Matrix temp(m_1.order);
+    for (int i = 0; i < m_1.order; i++) {
+        for (int j = 0; j < m_1.order; j++) {
+            temp.matrix[i][j] = m_1.matrix[i][j] + m_2.matrix[i][j];
+        }
+    }
+    return temp;
+}
+
+Matrix operator-(const Matrix &m_1, const Matrix &m_2) {
+    Matrix temp(m_1.order);
+    for (int i = 0; i < m_1.order; i++) {
+        for (int j = 0; j < m_1.order; j++) {
+            temp.matrix[i][j] = m_1.matrix[i][j] - m_2.matrix[i][j];
+        }
+    }
+    return temp;
+}
+
+Matrix &Matrix::operator=(const Matrix &new_m) {
+    if (this != &new_m) {
+        for (int i = 0; i < order; i++) {
+            delete[] this->matrix[i];
+        }
+        delete[] this->matrix;
+        this->order = new_m.order;
+        this->matrix = new double *[new_m.order];
+        for (int i = 0; i < order; i++) {
+            this->matrix[i] = new double[new_m.order];
+        }
+        for (int i = 0; i < new_m.order; i++) {
+            for (int j = 0; j < new_m.order; j++) {
+                this->matrix[i][j] = new_m.matrix[i][j];
+            }
+        }
+    }
+    return *this;
 }
 
 double &Matrix::operator()(int i, int j) {
