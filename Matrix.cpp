@@ -5,6 +5,7 @@
 #include "Matrix.h"
 #include <cmath>
 #include <stdexcept>
+#include <iostream>
 
 using namespace std;
 
@@ -190,4 +191,29 @@ double Matrix::operator()() {
     delete[] _matrix;
 
     return det;
+}
+
+ostream& operator <<(ostream& os, const Matrix& m) {
+    for (int i = 0; i < m.order; ++i) {
+        for (int j = 0; j < m.order; ++j) {
+            os << m.matrix[i][j];
+            if (j != m.order - 1) os << " ";
+        }
+        if (i != m.order) os << "\n";
+    }
+    return os;
+}
+
+istream& operator >>(istream& is, Matrix& m) {
+    is >> m.order;
+    m.matrix = new double *[m.order];
+    for (int i = 0; i < m.order; i++) {
+        m.matrix[i] = new double[m.order];
+    }
+    for (int i = 0; i < m.order; ++i) {
+        for (int j = 0; j < m.order; ++j) {
+            is >> m.matrix[i][j];
+        }
+    }
+    return is;
 }

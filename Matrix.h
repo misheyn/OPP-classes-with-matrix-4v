@@ -5,6 +5,9 @@
 #ifndef LAB1_3_MATRIX_H
 #define LAB1_3_MATRIX_H
 
+#include <iostream>
+using namespace std;
+
 class Matrix {
 
 public:
@@ -33,6 +36,10 @@ public:
     double &operator()(int i, int j);
 
     double operator()();
+
+    friend ostream& operator <<(ostream& os, const Matrix& m);
+
+    friend istream& operator >>(istream& os, Matrix& m);
 
 private:
     int order;
