@@ -35,7 +35,6 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
         REQUIRE(strcmp(q.toString(), "9 -6\n1 18") == 0);
     }
 
-
     SECTION("Overloaded operators") {
         Matrix a(2);
         int arr_a[4] = {3, 7, 12, 9};
@@ -44,15 +43,12 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
             for (int j = 0; j < 2; j++, k++)
                 a.SetMatrix(i, j, arr_a[k]);
 
-        int arr_b[4] = {1, 55, 2, 69};
-
         Matrix b(2);
+        int arr_b[4] = {1, 55, 2, 69};
         k = 0;
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++, k++) {
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < 2; j++, k++)
                 b.SetMatrix(i, j, arr_b[k]);
-            }
-        }
 
         Matrix c;
         c = a + b;
@@ -69,20 +65,51 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
     }
 
     SECTION("Exceptions tests") {
+        Matrix test(2);
         try {
-            Matrix k(-3);
+            test.SetMatrix(5, 9, 76);
         } catch (exception &ex) {
-            cout << ex.what() << endl;
+            REQUIRE(strcmp(ex.what(), "Out of range matrix") == 0);
         }
+
         try {
-            Matrix k(0);
+            test.GetMatrix(2, 2);
         } catch (exception &ex) {
-            cout << ex.what() << endl;
+            REQUIRE(strcmp(ex.what(), "Out of range matrix") == 0);
         }
+
         try {
-            Matrix k('t');
+            Matrix m(-3);
         } catch (exception &ex) {
-            cout << ex.what() << endl;
+            REQUIRE(strcmp(ex.what(), "Invalid matrix order") == 0);
+        }
+
+        Matrix one(2);
+        int arr_a[4] = {3, 7, 12, 9};
+
+        for (int i = 0; i < 2; i++)
+            for (int j = 0, k = 0; j < 2; j++, k++)
+                one.SetMatrix(i, j, arr_a[k]);
+
+        Matrix two(3);
+        int arr_b[9] = {28, 1, 0, 55, 2, 21, 69, 5, 47};
+
+        for (int i = 0; i < 3; i++)
+            for (int j = 0, k = 0; j < 3; j++, k++)
+                two.SetMatrix(i, j, arr_b[k]);
+
+        try {
+            Matrix three;
+            three = one + two;
+        } catch (exception &ex) {
+            REQUIRE(strcmp(ex.what(), "Add/subtract matrices of different orders") == 0);
+        }
+
+        try {
+            Matrix four;
+            four = one - two;
+        } catch (exception &ex) {
+            REQUIRE(strcmp(ex.what(), "Add/subtract matrices of different orders") == 0);
         }
     }
 }

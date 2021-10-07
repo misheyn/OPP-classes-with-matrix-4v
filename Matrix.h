@@ -12,7 +12,7 @@ public:
 
     Matrix(int order);
 
-    Matrix(const Matrix &matrix_2);
+    Matrix(const Matrix &obj);
 
     ~Matrix();
 
