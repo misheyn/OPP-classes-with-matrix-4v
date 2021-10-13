@@ -15,7 +15,7 @@ Matrix::Matrix() {
 }
 
 Matrix::Matrix(int order) {
-    if (order < 1 || isalpha((char)order)) throw invalid_argument("Incorrect matrix order");
+    if (order < 1 || isalpha((char) order)) throw invalid_argument("Incorrect matrix order");
     this->order = order;
     this->matrix = new double *[order];
     //if (this->matrix == nullptr) throw "Memory denied";
@@ -193,19 +193,19 @@ double Matrix::operator()() {
     return det;
 }
 
-ostream& operator <<(ostream& os, const Matrix& m) {
+ostream &operator<<(ostream &os, const Matrix &m) {
     for (int i = 0; i < m.order; ++i) {
         for (int j = 0; j < m.order; ++j) {
             os << m.matrix[i][j];
             if (j != m.order - 1) os << " ";
         }
-        if (i != m.order) os << "\n";
+        if (i != m.order - 1) os << "\n";
+        else os << "";
     }
     return os;
 }
 
-istream& operator >>(istream& is, Matrix& m) {
-    is >> m.order;
+istream &operator>>(istream &is, Matrix &m) {
     m.matrix = new double *[m.order];
     for (int i = 0; i < m.order; i++) {
         m.matrix[i] = new double[m.order];
