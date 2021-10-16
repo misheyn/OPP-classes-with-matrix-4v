@@ -19,13 +19,13 @@ public:
 
     ~Matrix();
 
-    double GetMatrix(int i, int j) const;
+    virtual double GetMatrix(int i, int j) const;
 
-    void SetMatrix(int i, int j, int value);
+    virtual void SetMatrix(int i, int j, int value);
 
-    char *toString();
+    virtual char *toString();
 
-    void TransposeMatrix();
+    virtual void TransposeMatrix();
 
     friend Matrix operator+(const Matrix &m_1, const Matrix &m_2);
 
@@ -33,7 +33,7 @@ public:
 
     Matrix &operator=(const Matrix &matrix_2);
 
-    double &operator()(int i, int j);
+    virtual double &operator()(int i, int j);
 
     double operator()();
 
@@ -41,7 +41,7 @@ public:
 
     friend istream& operator >>(istream& os, Matrix& m);
 
-private:
+protected:
     int order;
     double **matrix;
 

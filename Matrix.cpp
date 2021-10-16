@@ -3,63 +3,61 @@
 //
 
 #include "Matrix.h"
-#include <cmath>
 #include <stdexcept>
 
 using namespace std;
 
 Matrix::Matrix() {
-    this->order = 0;
-    this->matrix = nullptr;
+    order = 0;
+    matrix = nullptr;
 }
 
-Matrix::Matrix(int order) {
+Matrix::Matrix(int order):order(order) {
     if (order < 1 || isalpha((char) order))
         throw invalid_argument("Invalid matrix order");
-    this->order = order;
-    this->matrix = new double *[order];
+    matrix = new double *[order];
     for (int i = 0; i < order; i++) {
-        this->matrix[i] = new double[order];
+        matrix[i] = new double[order];
     }
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
-            this->matrix[i][j] = 0;
+            matrix[i][j] = 0;
 }
 
 Matrix::Matrix(const Matrix &obj) {
-    this->order = obj.order;
-    this->matrix = new double *[obj.order];
+    order = obj.order;
+    matrix = new double *[obj.order];
     for (int i = 0; i < order; i++) {
-        this->matrix[i] = new double[obj.order];
+        matrix[i] = new double[obj.order];
     }
     for (int i = 0; i < obj.order; i++)
         for (int j = 0; j < obj.order; j++)
-            this->matrix[i][j] = obj.matrix[i][j];
+            matrix[i][j] = obj.matrix[i][j];
 }
 
 Matrix::~Matrix() {
     for (int i = 0; i < order; i++) {
-        delete[] this->matrix[i];
+        delete[] matrix[i];
     }
-    delete[] this->matrix;
+    delete[] matrix;
 }
 
 double Matrix::GetMatrix(int i, int j) const {
-    if (i >= this->order || j >= this->order || i < 0 || j < 0)
+    if (i >= order || j >= order || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
-    return this->matrix[i][j];
+    return matrix[i][j];
 }
 
 void Matrix::SetMatrix(int i, int j, int value) {
-    if (i >= this->order || j >= this->order || i < 0 || j < 0)
+    if (i >= order || j >= order || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
-    this->matrix[i][j] = value;
+    matrix[i][j] = value;
 }
 
 char *Matrix::toString() {
     int l, len;
-    if (this->matrix == nullptr) return nullptr;
-    l = digitCount(this->matrix, this->order);
+    if (matrix == nullptr) return nullptr;
+    l = digitCount(matrix, order);
     char *buf = new char[l + order * order];
     len = 0;
     for (int i = 0; i < order; i++) {
@@ -80,15 +78,15 @@ char *Matrix::toString() {
 }
 
 void Matrix::TransposeMatrix() {
-    Matrix other(this->order);
+    Matrix other(order);
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
-            other.matrix[i][j] = this->matrix[j][i];
+            other.matrix[i][j] = matrix[j][i];
         }
     }
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
-            this->matrix[i][j] = other.matrix[i][j];
+            matrix[i][j] = other.matrix[i][j];
         }
     }
 }
@@ -144,17 +142,17 @@ Matrix operator-(const Matrix &m_1, const Matrix &m_2) {
 Matrix &Matrix::operator=(const Matrix &new_m) {
     if (this != &new_m) {
         for (int i = 0; i < order; i++) {
-            delete[] this->matrix[i];
+            delete[] matrix[i];
         }
-        delete[] this->matrix;
-        this->order = new_m.order;
-        this->matrix = new double *[new_m.order];
+        delete[] matrix;
+        order = new_m.order;
+        matrix = new double *[new_m.order];
         for (int i = 0; i < order; i++) {
-            this->matrix[i] = new double[new_m.order];
+            matrix[i] = new double[new_m.order];
         }
         for (int i = 0; i < new_m.order; i++) {
             for (int j = 0; j < new_m.order; j++) {
-                this->matrix[i][j] = new_m.matrix[i][j];
+                matrix[i][j] = new_m.matrix[i][j];
             }
         }
     }
@@ -162,9 +160,9 @@ Matrix &Matrix::operator=(const Matrix &new_m) {
 }
 
 double &Matrix::operator()(int i, int j) {
-    if (i > this->order || j > this->order || i < 0 || j < 0)
+    if (i > order || j > order || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
-    return this->matrix[i][j];
+    return matrix[i][j];
 }
 
 double Matrix::operator()() {
@@ -179,7 +177,7 @@ double Matrix::operator()() {
 
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
-            _matrix[i][j] = this->matrix[i][j];
+            _matrix[i][j] = matrix[i][j];
 
     while (scale > 1) {
         if (_matrix[order - scale][order - scale] == 0) return 0;
