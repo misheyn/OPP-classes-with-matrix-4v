@@ -4,10 +4,11 @@
 
 #ifndef LAB1_3_RECTANGULARMATRIX_H
 #define LAB1_3_RECTANGULARMATRIX_H
+
 #include "Matrix.h"
 
 
-class RectangularMatrix: public Matrix {
+class RectangularMatrix : public Matrix {
 public:
     RectangularMatrix();
 

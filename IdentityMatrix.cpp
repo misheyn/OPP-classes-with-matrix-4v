@@ -10,4 +10,4 @@ IdentityMatrix::IdentityMatrix(int dim) : Matrix(dim) {
     for (int i = 0; i < dim; i++) matrix[i][i] = 1;
 }
 
-IdentityMatrix::IdentityMatrix(const IdentityMatrix &obj) : Matrix(obj){}
+IdentityMatrix::IdentityMatrix(const IdentityMatrix &obj) : Matrix(obj) {}

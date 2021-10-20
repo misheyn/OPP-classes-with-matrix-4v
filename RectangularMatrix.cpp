@@ -6,6 +6,7 @@
 RectangularMatrix::RectangularMatrix() {
     rows = 0;
     columns = 0;
+    order = 0;
     matrix = nullptr;
 }
 
@@ -24,7 +25,7 @@ RectangularMatrix::RectangularMatrix(int n, int m) {
             matrix[i][j] = 0;
 }
 
-RectangularMatrix::RectangularMatrix(const RectangularMatrix &obj) {
+RectangularMatrix::RectangularMatrix(const RectangularMatrix &obj) : Matrix(obj) {
     rows = obj.rows;
     columns = obj.columns;
     matrix = new double *[obj.rows];
@@ -88,7 +89,7 @@ void RectangularMatrix::TransposeMatrix() {
     swap(rows, columns);
     matrix = new double *[rows];
     for (int i = 0; i < rows; ++i) {
-        matrix[i]  = new double [columns];
+        matrix[i] = new double[columns];
     }
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {

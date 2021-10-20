@@ -5,9 +5,9 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include "Matrix.h"
 #include "IdentityMatrix.h"
 #include "RectangularMatrix.h"
-#include "Matrix.h"
 
 using namespace std;
 
@@ -100,7 +100,6 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
         for (int i = 0; i < 3; i++)
             for (int j = 0, k = 0; j < 3; j++, k++)
                 two.SetMatrix(i, j, arr_b[k]);
-
         try {
             Matrix three;
             three = one + two;
@@ -150,7 +149,10 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
             std::cerr << "File open error" << "\n";
             exit(1);
         }
-        binFileIn << a << endl;
+        //binFileIn << a << endl;
+//        cout << sizeof(a.toString()) << endl;
+//        cout << a.toString() << endl;
+        binFileIn.write(a.toString(), sizeof(a) - 2);
         binFileIn.close();
 
         ifstream binFileOut;
@@ -159,12 +161,15 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
             std::cerr << "File open error" << "\n";
             exit(1);
         }
-        binFileOut >> c;
+        //binFileOut >> c;
+//        cout << sizeof(c) << endl;
+//        cout << c.toString() << endl;
+        binFileOut.read(c.toString(), sizeof(c) - 2);
         REQUIRE(strcmp(c.toString(), a.toString()) == 0);
         binFileOut.close();
     }
 
-    SECTION("Identity matrix work"){
+    SECTION("Identity matrix work") {
         IdentityMatrix t;
         REQUIRE(t.toString() == nullptr);
 
@@ -258,15 +263,15 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
         int arr_one[4] = {3, 7, 12, 9};
 
         for (int i = 0; i < 2; i++)
-            for (int j = 0, k = 0; j < 2; j++, k++)
-                one.SetMatrix(i, j, arr_one[k]);
+            for (int j = 0, p = 0; j < 2; j++, p++)
+                one.SetMatrix(i, j, arr_one[p]);
 
         RectangularMatrix two(3, 3);
         int arr_two[9] = {28, 1, 0, 55, 2, 21, 69, 5, 47};
 
         for (int i = 0; i < 3; i++)
-            for (int j = 0, k = 0; j < 3; j++, k++)
-                two.SetMatrix(i, j, arr_two[k]);
+            for (int j = 0, p = 0; j < 3; j++, p++)
+                two.SetMatrix(i, j, arr_two[p]);
 
         try {
             RectangularMatrix three;
