@@ -7,51 +7,51 @@
 #include <iostream>
 
 Matrix::Matrix() {
-    this->order = 0;
-    this->matrix = nullptr;
+    order = 0;
+    matrix = nullptr;
 }
 
-Matrix::Matrix(int order) {
-    this->order = order;
-    this->matrix = new double *[order];
+Matrix::Matrix(int dim) {
+    order = dim;
+    matrix = new double *[order];
     for (int i = 0; i < order; i++) {
-        this->matrix[i] = new double[order];
+        matrix[i] = new double[order];
     }
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
-            this->matrix[i][j] = 0;
+            matrix[i][j] = 0;
 }
 
 Matrix::Matrix(const Matrix &matrix_2) {
-    this->order = matrix_2.order;
-    this->matrix = new double *[matrix_2.order];
+    order = matrix_2.order;
+    matrix = new double *[matrix_2.order];
     for (int i = 0; i < order; i++) {
-        this->matrix[i] = new double[matrix_2.order];
+        matrix[i] = new double[matrix_2.order];
     }
     for (int i = 0; i < matrix_2.order; i++)
         for (int j = 0; j < matrix_2.order; j++)
-            this->matrix[i][j] = matrix_2.matrix[i][j];
+            matrix[i][j] = matrix_2.matrix[i][j];
 }
 
 Matrix::~Matrix() {
     for (int i = 0; i < order; i++) {
-        delete[] this->matrix[i];
+        delete[] matrix[i];
     }
-    delete[] this->matrix;
+    delete[] matrix;
 }
 
 double Matrix::GetMatrix(int i, int j) const {
-    return this->matrix[i][j];
+    return matrix[i][j];
 }
 
-void Matrix::SetMatrix(int i, int j, int value) {
+void Matrix::SetMatrix(int i, int j, double value) {
     matrix[i][j] = value;
 }
 
 char *Matrix::toString() {
     int l, len;
-    if (this->matrix == nullptr) return nullptr;
-    l = digitCount(this->matrix, this->order);
+    if (matrix == nullptr) return nullptr;
+    l = digitCount(matrix, order);
     char *buf = new char[l + order * order];
     len = 0;
     for (int i = 0; i < order; i++) {
@@ -72,15 +72,15 @@ char *Matrix::toString() {
 }
 
 void Matrix::TransposeMatrix() {
-    Matrix other(this->order);
+    Matrix other(order);
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
-            other.matrix[i][j] = this->matrix[j][i];
+            other.matrix[i][j] = matrix[j][i];
         }
     }
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
-            this->matrix[i][j] = other.matrix[i][j];
+            matrix[i][j] = other.matrix[i][j];
         }
     }
 }
@@ -112,17 +112,17 @@ int Matrix::strCat(char *buf, int len, char elem) {
 Matrix &Matrix::operator=(const Matrix &new_m) {
     if (this != &new_m) {
         for (int i = 0; i < order; i++) {
-            delete[] this->matrix[i];
+            delete[] matrix[i];
         }
-        delete[] this->matrix;
-        this->order = new_m.order;
-        this->matrix = new double *[new_m.order];
+        delete[] matrix;
+        order = new_m.order;
+        matrix = new double *[new_m.order];
         for (int i = 0; i < order; i++) {
-            this->matrix[i] = new double[new_m.order];
+            matrix[i] = new double[new_m.order];
         }
         for (int i = 0; i < new_m.order; i++) {
             for (int j = 0; j < new_m.order; j++) {
-                this->matrix[i][j] = new_m.matrix[i][j];
+                matrix[i][j] = new_m.matrix[i][j];
             }
         }
     }
@@ -150,7 +150,7 @@ int Matrix::digitCount(double **_matrix, int _order) {
 }
 
 double &Matrix::operator()(int i, int j) {
-    return this->matrix[i][j];
+    return matrix[i][j];
 }
 
 double Matrix::operator()() {
@@ -165,7 +165,7 @@ double Matrix::operator()() {
 
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
-            _matrix[i][j] = this->matrix[i][j];
+            _matrix[i][j] = matrix[i][j];
 
     while (scale > 1) {
         if (_matrix[order - scale][order - scale] == 0) return 0;

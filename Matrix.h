@@ -10,7 +10,7 @@ class Matrix {
 public:
     Matrix();
 
-    Matrix(int order);
+    Matrix(int dim);
 
     Matrix(const Matrix &matrix_2);
 
@@ -18,7 +18,7 @@ public:
 
     double GetMatrix(int i, int j) const;
 
-    void SetMatrix(int i, int j, int value);
+    void SetMatrix(int i, int j, double value);
 
     char *toString();
 
