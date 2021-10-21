@@ -20,7 +20,7 @@ public:
 
     double GetMatrix(int i, int j) const;
 
-    void SetMatrix(int i, int j, int value);
+    void SetMatrix(int i, int j, double value);
 
     char *toString();
 

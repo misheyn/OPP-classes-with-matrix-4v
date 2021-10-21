@@ -25,9 +25,10 @@ RectangularMatrix::RectangularMatrix(int n, int m) {
             matrix[i][j] = 0;
 }
 
-RectangularMatrix::RectangularMatrix(const RectangularMatrix &obj) : Matrix(obj) {
+RectangularMatrix::RectangularMatrix(const RectangularMatrix &obj) {
     rows = obj.rows;
     columns = obj.columns;
+    order = obj.order;
     matrix = new double *[obj.rows];
     for (int i = 0; i < rows; i++) {
         matrix[i] = new double[obj.columns];
@@ -50,7 +51,7 @@ double RectangularMatrix::GetMatrix(int i, int j) const {
     return matrix[i][j];
 }
 
-void RectangularMatrix::SetMatrix(int i, int j, int value) {
+void RectangularMatrix::SetMatrix(int i, int j, double value) {
     if (i >= rows || j >= columns || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
     matrix[i][j] = value;
