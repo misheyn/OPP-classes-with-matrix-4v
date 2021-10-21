@@ -6,6 +6,7 @@
 #define LAB1_3_MATRIX_H
 
 #include <iostream>
+
 using namespace std;
 
 class Matrix {
@@ -37,13 +38,13 @@ public:
 
     double operator()();
 
-    friend ostream& operator <<(ostream& os, const Matrix& m);
+    friend ostream &operator<<(ostream &os, const Matrix &m);
 
-    friend istream& operator >>(istream& os, Matrix& m);
+    friend istream &operator>>(istream &os, Matrix &m);
 
-    friend ofstream& BinaryIn(ofstream& os, Matrix& m);
+    friend ofstream &BinaryIn(ofstream &os, Matrix &m);
 
-    friend ifstream& BinaryOut(ifstream& os, Matrix& m);
+    friend ifstream &BinaryOut(ifstream &os, Matrix &m);
 
 private:
     int order;
