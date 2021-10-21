@@ -3,92 +3,87 @@
 //
 
 #include "Matrix.h"
-#include <cmath>
 #include <stdexcept>
+#include <fstream>
 
 using namespace std;
 
 Matrix::Matrix() {
-    this->order = 0;
-    this->matrix = nullptr;
+    order = 0;
+    matrix = nullptr;
 }
 
-Matrix::Matrix(int order) {
-    if (order < 1 || isalpha((char) order))
+Matrix::Matrix(int dim) {
+    if (dim < 1 || isalpha((char) dim))
         throw invalid_argument("Invalid matrix order");
-    this->order = order;
-    this->matrix = new double *[order];
+    order = dim;
+    matrix = new double *[order];
     for (int i = 0; i < order; i++) {
-        this->matrix[i] = new double[order];
+        matrix[i] = new double[order];
     }
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
-            this->matrix[i][j] = 0;
+            matrix[i][j] = 0;
 }
 
 Matrix::Matrix(const Matrix &obj) {
-    this->order = obj.order;
-    this->matrix = new double *[obj.order];
+    order = obj.order;
+    matrix = new double *[obj.order];
     for (int i = 0; i < order; i++) {
-        this->matrix[i] = new double[obj.order];
+        matrix[i] = new double[obj.order];
     }
     for (int i = 0; i < obj.order; i++)
         for (int j = 0; j < obj.order; j++)
-            this->matrix[i][j] = obj.matrix[i][j];
+            matrix[i][j] = obj.matrix[i][j];
 }
 
 Matrix::~Matrix() {
     for (int i = 0; i < order; i++) {
-        delete[] this->matrix[i];
+        delete[] matrix[i];
     }
-    delete[] this->matrix;
+    delete[] matrix;
 }
 
 double Matrix::GetMatrix(int i, int j) const {
-    if (i >= this->order || j >= this->order || i < 0 || j < 0)
+    if (i >= order || j >= order || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
-    return this->matrix[i][j];
+    return matrix[i][j];
 }
 
-void Matrix::SetMatrix(int i, int j, int value) {
-    if (i >= this->order || j >= this->order || i < 0 || j < 0)
+void Matrix::SetMatrix(int i, int j, double value) {
+    if (i >= order || j >= order || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
-    this->matrix[i][j] = value;
+    matrix[i][j] = value;
 }
 
 char *Matrix::toString() {
     int l, len;
-    if (this->matrix == nullptr) return nullptr;
-    l = digitCount(this->matrix, this->order);
+    if (matrix == nullptr) return nullptr;
+    l = digitCount(matrix, order);
     char *buf = new char[l + order * order];
     len = 0;
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             len += std::sprintf(buf + len * sizeof(char), "%g", matrix[i][j]);
-            if (j != order - 1) {
+            if (j != order - 1)
                 len += strCat(buf, len, (' '));
-            }
         }
-        if (i != order - 1) {
+        if (i != order - 1)
             len += strCat(buf, len, ('\n'));
-
-        } else {
-            len += strCat(buf, len, ('\0'));
-        }
     }
     return buf;
 }
 
 void Matrix::TransposeMatrix() {
-    Matrix other(this->order);
+    Matrix other(order);
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
-            other.matrix[i][j] = this->matrix[j][i];
+            other.matrix[i][j] = matrix[j][i];
         }
     }
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
-            this->matrix[i][j] = other.matrix[i][j];
+            matrix[i][j] = other.matrix[i][j];
         }
     }
 }
@@ -144,17 +139,17 @@ Matrix operator-(const Matrix &m_1, const Matrix &m_2) {
 Matrix &Matrix::operator=(const Matrix &new_m) {
     if (this != &new_m) {
         for (int i = 0; i < order; i++) {
-            delete[] this->matrix[i];
+            delete[] matrix[i];
         }
-        delete[] this->matrix;
-        this->order = new_m.order;
-        this->matrix = new double *[new_m.order];
+        delete[] matrix;
+        order = new_m.order;
+        matrix = new double *[new_m.order];
         for (int i = 0; i < order; i++) {
-            this->matrix[i] = new double[new_m.order];
+            matrix[i] = new double[new_m.order];
         }
         for (int i = 0; i < new_m.order; i++) {
             for (int j = 0; j < new_m.order; j++) {
-                this->matrix[i][j] = new_m.matrix[i][j];
+                matrix[i][j] = new_m.matrix[i][j];
             }
         }
     }
@@ -162,9 +157,9 @@ Matrix &Matrix::operator=(const Matrix &new_m) {
 }
 
 double &Matrix::operator()(int i, int j) {
-    if (i > this->order || j > this->order || i < 0 || j < 0)
+    if (i > order || j > order || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
-    return this->matrix[i][j];
+    return matrix[i][j];
 }
 
 double Matrix::operator()() {
@@ -179,7 +174,7 @@ double Matrix::operator()() {
 
     for (int i = 0; i < order; i++)
         for (int j = 0; j < order; j++)
-            _matrix[i][j] = this->matrix[i][j];
+            _matrix[i][j] = matrix[i][j];
 
     while (scale > 1) {
         if (_matrix[order - scale][order - scale] == 0) return 0;
@@ -202,18 +197,19 @@ double Matrix::operator()() {
 }
 
 ostream &operator<<(ostream &os, const Matrix &m) {
+    os << m.order << "\n";
     for (int i = 0; i < m.order; ++i) {
         for (int j = 0; j < m.order; ++j) {
             os << m.matrix[i][j];
             if (j != m.order - 1) os << " ";
         }
         if (i != m.order - 1) os << "\n";
-        else os << "";
     }
     return os;
 }
 
 istream &operator>>(istream &is, Matrix &m) {
+    is >> m.order;
     m.matrix = new double *[m.order];
     for (int i = 0; i < m.order; i++) {
         m.matrix[i] = new double[m.order];
@@ -221,6 +217,30 @@ istream &operator>>(istream &is, Matrix &m) {
     for (int i = 0; i < m.order; ++i) {
         for (int j = 0; j < m.order; ++j) {
             is >> m.matrix[i][j];
+        }
+    }
+    return is;
+}
+
+ofstream& BinaryIn(ofstream& os, Matrix& m) {
+    os.write((char*)&m.order, sizeof(int));
+    for (int i = 0; i < m.order; ++i) {
+        for (int j = 0; j < m.order; ++j) {
+            os.write((char*)&m.matrix[i][j], sizeof(double));
+        }
+    }
+    return os;
+}
+
+ifstream& BinaryOut(ifstream& is, Matrix& m) {
+    is.read((char*)&m.order, sizeof(int));
+    m.matrix = new double *[m.order];
+    for (int i = 0; i < m.order; i++) {
+        m.matrix[i] = new double[m.order];
+    }
+    for (int i = 0; i < m.order; ++i) {
+        for (int j = 0; j < m.order; ++j) {
+            is.read((char*)&m.matrix[i][j], sizeof(double));
         }
     }
     return is;

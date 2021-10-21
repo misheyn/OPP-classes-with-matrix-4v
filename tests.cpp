@@ -117,30 +117,31 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
     SECTION("I / O streams") {
 
         Matrix a(2);
-        Matrix c(2);
-        int arr_a[4] = {3, 59, 0, 11};
+        Matrix c;
+        double arr_a[4] = {3, 59, 0, 11};
         int k = 0;
         for (int i = 0; i < 2; i++)
             for (int j = 0; j < 2; j++, k++)
                 a.SetMatrix(i, j, arr_a[k]);
 
-        fstream file;
-        file.open("../text.txt", fstream::out);
-        if (!file.is_open()) {
+        ofstream fileIn;
+        fileIn.open("../text.txt");
+        if (!fileIn.is_open()) {
             std::cerr << "File open error" << "\n";
             exit(1);
         }
-        file << a << endl;
-        file.close();
+        fileIn << a << endl;
+        fileIn.close();
 
-        file.open("../text.txt", fstream::in);
-        if (!file.is_open()) {
+        ifstream fileOut;
+        fileOut.open("../text.txt");
+        if (!fileOut.is_open()) {
             std::cerr << "File open error" << "\n";
             exit(1);
         }
-        file >> c;
+        fileOut >> c;
+        fileOut.close();
         REQUIRE(strcmp(c.toString(), a.toString()) == 0);
-        file.close();
 
         ofstream binFileIn;
         binFileIn.open("../binText.dat", ios::binary);
@@ -148,7 +149,7 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
             std::cerr << "File open error" << "\n";
             exit(1);
         }
-        binFileIn << a << endl;
+        BinaryIn(binFileIn, a);
         binFileIn.close();
 
         ifstream binFileOut;
@@ -157,9 +158,9 @@ TEST_CASE("MatrixClass tests", "[MATRIX]") {
             std::cerr << "File open error" << "\n";
             exit(1);
         }
-        binFileOut >> c;
-        REQUIRE(strcmp(c.toString(), a.toString()) == 0);
+        BinaryOut(binFileOut, c);
         binFileOut.close();
+        REQUIRE(strcmp(c.toString(), a.toString()) == 0);
     }
 }
 

@@ -13,7 +13,7 @@ class Matrix {
 public:
     Matrix();
 
-    Matrix(int order);
+    Matrix(int dim);
 
     Matrix(const Matrix &obj);
 
@@ -21,7 +21,7 @@ public:
 
     double GetMatrix(int i, int j) const;
 
-    void SetMatrix(int i, int j, int value);
+    void SetMatrix(int i, int j, double value);
 
     char *toString();
 
@@ -40,6 +40,10 @@ public:
     friend ostream& operator <<(ostream& os, const Matrix& m);
 
     friend istream& operator >>(istream& os, Matrix& m);
+
+    friend ofstream& BinaryIn(ofstream& os, Matrix& m);
+
+    friend ifstream& BinaryOut(ifstream& os, Matrix& m);
 
 private:
     int order;
