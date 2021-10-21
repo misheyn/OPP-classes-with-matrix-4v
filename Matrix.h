@@ -12,7 +12,7 @@ public:
     // конструктор по умолчанию
     Matrix();
     // конструктор с параметрами
-    Matrix(int order);
+    Matrix(int dim);
     // конструктор копирования
     Matrix(const Matrix &matrix_2);
     // деструктор
