@@ -6,19 +6,21 @@
 #define LAB1_3_QUEUE_H
 
 #include "Node.h"
+template <typename T>
 
 class Queue {
 public:
+
     Queue();
 
-    void pushEnd(Matrix &ob);
+    void pushEnd(T &ob);
 
     void popBegin();
 
-    Matrix &operator[](int i);
+    T &operator[](int i);
 
 private:
-    node *first;
+    node<T> *first;
 };
 
 

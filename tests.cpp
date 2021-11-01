@@ -319,7 +319,7 @@ TEST_CASE("Circular queue", "[Lab 5]") {
         }
     }
 
-    Queue queue;
+    Queue<Matrix> queue;
     queue.pushEnd(a);
     queue.pushEnd(b);
     queue.pushEnd(c);

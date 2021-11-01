@@ -1,15 +1,15 @@
 //
 // Created by Amalia on 28.10.2021.
 //
-
+#include "Node.h"
 #include "Queue.h"
 
-Queue::Queue() {
-    first = nullptr;
-}
+template <typename T>
+Queue<T>::Queue() : first(nullptr) {}
 
-void Queue::pushEnd(Matrix &obj) {
-    node *tmp = new node(obj);
+template <typename T>
+void Queue<T>::pushEnd(T &obj) {
+    node<T> *tmp = new node(obj);
     if (first != nullptr) {
         if (first->prev != nullptr) {
             first->prev->next = tmp;
@@ -28,8 +28,9 @@ void Queue::pushEnd(Matrix &obj) {
     }
 }
 
-void Queue::popBegin() {
-    node *tmp = first;
+template <typename T>
+void Queue<T>::popBegin() {
+    node<T> *tmp = first;
     if (first != nullptr) {
         if (first->prev != nullptr) {
             first->prev->next = first->next;
@@ -43,8 +44,9 @@ void Queue::popBegin() {
     }
 }
 
-Matrix &Queue::operator[](int i) {
-    node *tmp = first;
+template <typename T>
+T &Queue<T>::operator[](int i) {
+    node<T> *tmp = first;
     if (first != nullptr) {
         for (int j = 0; j < i; j++) {
             tmp = tmp->next;

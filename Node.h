@@ -6,13 +6,15 @@
 #define LAB1_3_NODE_H
 
 #include "Matrix.h"
+template <typename T>
+
 
 struct node {
     node *prev;
     node *next;
-    Matrix &matrix;
+    T &obj;
 
-    node(Matrix &obj) : prev(nullptr), next(nullptr), matrix(obj) {}
+    node(T &elem) : prev(nullptr), next(nullptr), obj(elem) {}
 };
 
 #endif //LAB1_3_NODE_H
