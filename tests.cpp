@@ -9,6 +9,7 @@
 #include "IdentityMatrix.h"
 #include "RectangularMatrix.h"
 #include "Queue.h"
+#include <stack>
 
 using namespace std;
 
@@ -336,4 +337,8 @@ TEST_CASE("Circular queue", "[Lab 5]") {
 
     queue.popBegin();
     REQUIRE(strcmp(queue[0].toString(), "1 55\n2 69") == 0);
+}
+
+TEST_CASE("STL: Stack", "[Lab 8]") {
+
 }
