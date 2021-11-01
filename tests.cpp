@@ -340,5 +340,24 @@ TEST_CASE("Circular queue", "[Lab 5]") {
 }
 
 TEST_CASE("STL: Stack", "[Lab 8]") {
+    stack<Matrix> st;
+    Matrix a(2);
+    int arr_a[4] = {3, 7, 12, 9};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++, k++)
+            a.SetMatrix(i, j, arr_a[k]);
 
+    Matrix b(2);
+    int arr_b[4] = {1, 55, 2, 69};
+    k = 0;
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++, k++)
+            b.SetMatrix(i, j, arr_b[k]);
+
+    st.push(a);
+    st.push(b);
+    cout << st.top() << endl;
+    //REQUIRE(strcmp(st.top(), "3 7\n12 9") == 0);
+    //REQUIRE(strcmp(queue[1].toString(), "1 55\n2 69") == 0);
 }
