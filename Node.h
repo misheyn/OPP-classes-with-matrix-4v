@@ -15,6 +15,7 @@ struct node {
     T &obj;
 
     node(T &elem) : prev(nullptr), next(nullptr), obj(elem) {}
+
 };
 
 #endif //LAB1_3_NODE_H
