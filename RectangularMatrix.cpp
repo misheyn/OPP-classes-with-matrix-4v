@@ -169,5 +169,3 @@ double &RectangularMatrix::operator()(int i, int j) {
         throw out_of_range("Out of range matrix");
     return matrix[i][j];
 }
-
-
