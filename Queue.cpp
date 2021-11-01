@@ -9,7 +9,7 @@ Queue<T>::Queue() : first(nullptr) {}
 
 template <typename T>
 void Queue<T>::pushEnd(T &obj) {
-    node<T> *tmp = new node(obj);
+    auto *tmp = new node<T>(obj);
     if (first != nullptr) {
         if (first->prev != nullptr) {
             first->prev->next = tmp;
