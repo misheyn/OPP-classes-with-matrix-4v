@@ -15,7 +15,7 @@ RectangularMatrix::RectangularMatrix(int n, int m) {
         throw invalid_argument("Invalid matrix order");
     rows = n;
     columns = m;
-    order = -1;
+    order = rows;
     matrix = new double *[rows];
     for (int i = 0; i < rows; i++) {
         matrix[i] = new double[columns];
@@ -36,13 +36,6 @@ RectangularMatrix::RectangularMatrix(const RectangularMatrix &obj) {
     for (int i = 0; i < obj.rows; i++)
         for (int j = 0; j < obj.columns; j++)
             matrix[i][j] = obj.matrix[i][j];
-}
-
-RectangularMatrix::~RectangularMatrix() {
-    for (int i = 0; i < rows; i++) {
-        delete[] matrix[i];
-    }
-    delete[] matrix;
 }
 
 double RectangularMatrix::GetMatrix(int i, int j) const {

@@ -16,8 +16,6 @@ public:
 
     RectangularMatrix(const RectangularMatrix &obj);
 
-    ~RectangularMatrix();
-
     double GetMatrix(int i, int j) const;
 
     void SetMatrix(int i, int j, double value);
