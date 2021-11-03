@@ -10,6 +10,8 @@
 #include "RectangularMatrix.h"
 #include "Queue.h"
 #include <stack>
+#include <set>
+#include <ctime>
 
 using namespace std;
 
@@ -339,6 +341,54 @@ TEST_CASE("Circular queue", "[Lab 5]") {
     REQUIRE(strcmp(queue[0].toString(), "1 55\n2 69") == 0);
 }
 
+TEST_CASE("Templates <int>", "[Lab 7]") {
+    Queue<int> q1;
+    int n1 = 5, n2 = 1, n3 = 9;
+
+    q1.pushEnd(n1);
+    q1.pushEnd(n2);
+    q1.pushEnd(n3);
+
+    REQUIRE(q1[0] == 5);
+    REQUIRE(q1[1] == 1);
+    REQUIRE(q1[2] == 9);
+
+    q1.popBegin();
+    REQUIRE(q1[0] == 1);
+}
+
+TEST_CASE("Templates <float>", "[Lab 7]") {
+    Queue<float> q2;
+    float n1 = 2.8, n2 = 8.4, n3 = 6.6;
+
+    q2.pushEnd(n1);
+    q2.pushEnd(n2);
+    q2.pushEnd(n3);
+
+    REQUIRE(q2[0] == 2.8f);
+    REQUIRE(q2[1] == 8.4f);
+    REQUIRE(q2[2] == 6.6f);
+
+    q2.popBegin();
+    REQUIRE(q2[0] == 8.4f);
+}
+
+TEST_CASE("Templates <char>", "[Lab 7]") {
+    Queue<char> q3;
+    char n1 = 'c', n2 = 'a', n3 = 't';
+
+    q3.pushEnd(n1);
+    q3.pushEnd(n2);
+    q3.pushEnd(n3);
+
+    REQUIRE(q3[0] == 'c');
+    REQUIRE(q3[1] == 'a');
+    REQUIRE(q3[2] == 't');
+
+    q3.popBegin();
+    REQUIRE(q3[0] == 'a');
+}
+
 TEST_CASE("STL: Stack", "[Lab 8]") {
     stack<Matrix> st;
     Matrix a(2);
@@ -355,9 +405,36 @@ TEST_CASE("STL: Stack", "[Lab 8]") {
         for (int j = 0; j < 2; j++, k++)
             b.SetMatrix(i, j, arr_b[k]);
 
-    st.push(a);
-    st.push(b);
-    cout << st.top() << endl;
-    //REQUIRE(strcmp(st.top(), "3 7\n12 9") == 0);
-    //REQUIRE(strcmp(queue[1].toString(), "1 55\n2 69") == 0);
+    clock_t startTime = clock();
+    for (int i = 0; i < 10000; ++i) {
+        st.push(a);
+        st.push(b);
+    }
+    cout << clock() - startTime << endl;
+    startTime = clock();
+    for (int i = 0; i < 20000; ++i) {
+        st.pop();
+    }
+    cout << clock() - startTime << endl;
+}
+
+TEST_CASE("STL: Multiset", "[Lab 8]") {
+    multiset<int> mst;
+    int num;
+    srand(time(NULL));
+    clock_t startTime = clock();
+    for (int i = 0; i < 10000; ++i) {
+        num = rand() % 100;
+        mst.insert(num);
+    }
+    multiset<int>::iterator it = mst.begin();
+    cout << clock() - startTime << endl;
+    startTime = clock();
+    for (; it != mst.end(); it++) {
+        mst.find(*it);
+    }
+    cout << clock() - startTime << endl;
+    startTime = clock();
+    mst.clear();
+    cout << clock() - startTime << endl;
 }
