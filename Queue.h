@@ -11,9 +11,11 @@ class Queue {
 public:
     Queue();
 
+    ~Queue();
+
     void pushEnd(Matrix &ob);
 
-    void popBegin();
+    Matrix popBegin();
 
     Matrix &operator[](int i);
 

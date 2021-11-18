@@ -8,6 +8,10 @@ Queue::Queue() {
     first = nullptr;
 }
 
+Queue::~Queue() {
+    delete[] first;
+}
+
 void Queue::pushEnd(Matrix &obj) {
     node *tmp = new node(obj);
     if (first != nullptr) {
@@ -28,17 +32,22 @@ void Queue::pushEnd(Matrix &obj) {
     }
 }
 
-void Queue::popBegin() {
+Matrix Queue::popBegin() {
     node *tmp = first;
+    node *tmp2 = tmp;
     if (first != nullptr) {
         if (first->prev != nullptr) {
             first->prev->next = first->next;
             first->next->prev = first->prev;
             first = first->next;
             delete tmp;
+            return tmp2->matrix;
+
         } else {
             delete first;
             first = nullptr;
+            return tmp2->matrix;
+
         }
     }
 }
