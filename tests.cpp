@@ -350,6 +350,8 @@ TEST_CASE("Templates <int>", "[Lab 7]") {
     REQUIRE(q1[1] == 1);
     REQUIRE(q1[2] == 9);
 
+    REQUIRE(q1.sumInt(q1[0], q1[1]) == 6);
+
     q1.popBegin();
     REQUIRE(q1[0] == 1);
 }
@@ -366,11 +368,13 @@ TEST_CASE("Templates <float>", "[Lab 7]") {
     REQUIRE(q2[1] == 8.4f);
     REQUIRE(q2[2] == 6.6f);
 
+    REQUIRE(q2.roundFloat(q2[0]) == 3.0);
+
     q2.popBegin();
     REQUIRE(q2[0] == 8.4f);
 }
 
-TEST_CASE("Templates <char>", "[Lab 7]") {
+/*TEST_CASE("Templates <char>", "[Lab 7]") {
     Queue<char> q3;
     char n1 = 'c', n2 = 'a', n3 = 't';
 
@@ -384,4 +388,4 @@ TEST_CASE("Templates <char>", "[Lab 7]") {
 
     q3.popBegin();
     REQUIRE(q3[0] == 'a');
-}
+}*/
