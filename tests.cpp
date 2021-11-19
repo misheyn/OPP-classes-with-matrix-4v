@@ -319,7 +319,7 @@ TEST_CASE("Circular queue", "[Lab 5]") {
         }
     }
 
-    Queue<Matrix> queue;
+    Queue <Matrix>queue;
     queue.pushEnd(a);
     queue.pushEnd(b);
     queue.pushEnd(c);
@@ -334,8 +334,14 @@ TEST_CASE("Circular queue", "[Lab 5]") {
     REQUIRE(strcmp(queue[4].toString(), "9 1 -6\n18 3 -1") == 0);
     REQUIRE(strcmp(queue[5].toString(), "1 55\n2 69\n2 -39") == 0);
 
-    queue.popBegin();
+
+    REQUIRE(strcmp(queue.popBegin().toString(), "3 7\n12 9") == 0);
     REQUIRE(strcmp(queue[0].toString(), "1 55\n2 69") == 0);
+
+    queue.popBegin();
+    queue.popBegin();
+    REQUIRE(strcmp(queue.popBegin().toString(), "1 0 0\n0 1 0\n0 0 1") == 0);
+    REQUIRE(strcmp(queue[0].toString(), "9 1 -6\n18 3 -1") == 0);
 }
 
 TEST_CASE("Templates <int>", "[Lab 7]") {

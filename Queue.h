@@ -39,17 +39,21 @@ public:
         }
     }
 
-    void popBegin() {
+    T popBegin() {
         node<T> *tmp = first;
+        node<T> *tmp2 = tmp;
         if (first != nullptr) {
             if (first->prev != nullptr) {
                 first->prev->next = first->next;
                 first->next->prev = first->prev;
                 first = first->next;
                 delete tmp;
+                return tmp2->obj;
+
             } else {
                 delete first;
                 first = nullptr;
+                return tmp2->obj;
             }
         }
     }
@@ -101,17 +105,22 @@ public:
         }
     }
 
-    void popBegin() {
+    int popBegin() {
         node<int> *tmp = first;
+        node<int> *tmp2 = tmp;
         if (first != nullptr) {
             if (first->prev != nullptr) {
                 first->prev->next = first->next;
                 first->next->prev = first->prev;
                 first = first->next;
                 delete tmp;
+                return tmp2->obj;
+
             } else {
                 delete first;
                 first = nullptr;
+                return tmp2->obj;
+
             }
         }
     }
@@ -163,17 +172,22 @@ public:
         }
     }
 
-    void popBegin() {
+    float popBegin() {
         node<float> *tmp = first;
+        node<float> *tmp2 = tmp;
         if (first != nullptr) {
             if (first->prev != nullptr) {
                 first->prev->next = first->next;
                 first->next->prev = first->prev;
                 first = first->next;
                 delete tmp;
+                return tmp2->obj;
+
             } else {
                 delete first;
                 first = nullptr;
+                return tmp2->obj;
+
             }
         }
     }
