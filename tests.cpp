@@ -390,7 +390,7 @@ TEST_CASE("Templates <char>", "[Lab 7]") {
 }
 
 TEST_CASE("STL: Stack", "[Lab 8]") {
-    stack<Matrix> st;
+    stack<Matrix> st1;
     Matrix a(2);
     int arr_a[4] = {3, 7, 12, 9};
     int k = 0;
@@ -407,34 +407,64 @@ TEST_CASE("STL: Stack", "[Lab 8]") {
 
     clock_t startTime = clock();
     for (int i = 0; i < 10000; ++i) {
-        st.push(a);
-        st.push(b);
+        st1.push(a);
+        st1.push(b);
+    }
+    for (int i = 0; i < 20000; ++i) {
+        st1.pop();
     }
     cout << clock() - startTime << endl;
+
+    stack<int> st2;
     startTime = clock();
-    for (int i = 0; i < 20000; ++i) {
-        st.pop();
+    for (int i = 0; i < 10000; ++i) {
+        st2.push(i);
+    }
+    for (int i = 0; i < 10000; ++i) {
+        st2.pop();
     }
     cout << clock() - startTime << endl;
 }
 
 TEST_CASE("STL: Multiset", "[Lab 8]") {
-    multiset<int> mst;
+    multiset<int> mst1;
     int num;
     srand(time(NULL));
     clock_t startTime = clock();
     for (int i = 0; i < 10000; ++i) {
         num = rand() % 100;
-        mst.insert(num);
+        mst1.insert(num);
     }
-    multiset<int>::iterator it = mst.begin();
-    cout << clock() - startTime << endl;
-    startTime = clock();
-    for (; it != mst.end(); it++) {
-        mst.find(*it);
+    auto it = mst1.begin();
+    for (; it != mst1.end(); it++) {
+        mst1.find(*it);
     }
+    mst1.clear();
     cout << clock() - startTime << endl;
+
+    multiset <Matrix> mst2;
+    Matrix a(2);
+    int arr_a[4] = {3, 7, 12, 9};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++, k++)
+            a.SetMatrix(i, j, arr_a[k]);
+
+    Matrix b(2);
+    int arr_b[4] = {1, 55, 2, 69};
+    k = 0;
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++, k++)
+            b.SetMatrix(i, j, arr_b[k]);
+
     startTime = clock();
-    mst.clear();
+    for (int i = 0; i < 10000; ++i) {
+        mst2.insert(a);
+    }
+    auto itt = mst2.begin();
+    for (; it != mst1.end(); it++) {
+        mst2.find(*itt);
+    }
+    mst2.clear();
     cout << clock() - startTime << endl;
 }

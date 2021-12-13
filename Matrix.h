@@ -38,6 +38,8 @@ public:
 
     double operator()();
 
+    friend bool operator<(const Matrix &m1, const Matrix &m2);
+
     friend ostream &operator<<(ostream &os, const Matrix &m);
 
     friend istream &operator>>(istream &os, Matrix &m);
@@ -53,6 +55,8 @@ protected:
     static int strCat(char *buf, int len, char elem);
 
     static int digitCount(double **_matrix, int _order);
+
+    double summary() const;
 };
 
 #endif //LAB1_3_MATRIX_H

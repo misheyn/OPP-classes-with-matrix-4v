@@ -13,7 +13,7 @@ Matrix::Matrix() {
     matrix = nullptr;
 }
 
-Matrix::Matrix(int order):order(order) {
+Matrix::Matrix(int order) : order(order) {
     if (order < 1 || isalpha((char) order))
         throw invalid_argument("Invalid matrix order");
     matrix = new double *[order];
@@ -200,6 +200,22 @@ double Matrix::operator()() {
     return det;
 }
 
+double Matrix::summary() const {
+    double sum = 0;
+    for (int i = 0; i < this->order; ++i) {
+        for (int j = 0; j < this->order; ++j) {
+            sum += this->matrix[i][j];
+        }
+    }
+    return sum;
+}
+
+bool operator<(const Matrix &m1, const Matrix &m2) {
+    double s1 = 0, s2 = 0;
+    s1 = m1.summary();
+    s2 = m2.summary();
+    return s1 < s2;
+}
 
 ostream &operator<<(ostream &os, const Matrix &m) {
     os << m.order << "\n";
@@ -227,26 +243,27 @@ istream &operator>>(istream &is, Matrix &m) {
     return is;
 }
 
-ofstream& BinaryIn(ofstream& os, Matrix& m) {
-    os.write((char*)&m.order, sizeof(int));
+ofstream &BinaryIn(ofstream &os, Matrix &m) {
+    os.write((char *) &m.order, sizeof(int));
     for (int i = 0; i < m.order; ++i) {
         for (int j = 0; j < m.order; ++j) {
-            os.write((char*)&m.matrix[i][j], sizeof(double));
+            os.write((char *) &m.matrix[i][j], sizeof(double));
         }
     }
     return os;
 }
 
-ifstream& BinaryOut(ifstream& is, Matrix& m) {
-    is.read((char*)&m.order, sizeof(int));
+ifstream &BinaryOut(ifstream &is, Matrix &m) {
+    is.read((char *) &m.order, sizeof(int));
     m.matrix = new double *[m.order];
     for (int i = 0; i < m.order; i++) {
         m.matrix[i] = new double[m.order];
     }
     for (int i = 0; i < m.order; ++i) {
         for (int j = 0; j < m.order; ++j) {
-            is.read((char*)&m.matrix[i][j], sizeof(double));
+            is.read((char *) &m.matrix[i][j], sizeof(double));
         }
     }
     return is;
 }
+
