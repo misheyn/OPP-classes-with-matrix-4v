@@ -1,10 +1,5 @@
-//
-// Created by Amalia on 09.09.2021.
-//
-
 #include "Matrix.h"
 #include <stdexcept>
-#include <fstream>
 
 using namespace std;
 
@@ -43,13 +38,13 @@ Matrix::~Matrix() {
     delete[] matrix;
 }
 
-double Matrix::GetMatrix(int i, int j) const {
+double Matrix::getMatrix(int i, int j) const {
     if (i >= order || j >= order || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
     return matrix[i][j];
 }
 
-void Matrix::SetMatrix(int i, int j, double value) {
+void Matrix::setMatrix(int i, int j, double value) {
     if (i >= order || j >= order || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
     matrix[i][j] = value;
@@ -78,7 +73,7 @@ char *Matrix::toString() {
     return buf;
 }
 
-void Matrix::TransposeMatrix() {
+void Matrix::transposeMatrix() {
     Matrix other(order);
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {

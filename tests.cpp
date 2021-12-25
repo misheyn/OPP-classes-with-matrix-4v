@@ -1,9 +1,4 @@
-//
-// Created by Amalia on 29.09.2021.
-//
 #include "catch.hpp"
-#include <iostream>
-#include <fstream>
 #include <cstring>
 #include "Matrix.h"
 #include "IdentityMatrix.h"
@@ -25,7 +20,7 @@ TEST_CASE("Fundamental square matrix work", "[Lab 1]") {
     int k = 0;
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
-            q.SetMatrix(i, j, arr_q[k]);
+            q.setMatrix(i, j, arr_q[k]);
             k++;
         }
     }
@@ -34,10 +29,10 @@ TEST_CASE("Fundamental square matrix work", "[Lab 1]") {
     Matrix A(q);
     REQUIRE(strcmp(A.toString(), q.toString()) == 0);
 
-    REQUIRE(q.GetMatrix(0, 0) == 9);
-    REQUIRE(q.GetMatrix(1, 1) == 18);
+    REQUIRE(q.getMatrix(0, 0) == 9);
+    REQUIRE(q.getMatrix(1, 1) == 18);
 
-    q.TransposeMatrix();
+    q.transposeMatrix();
     REQUIRE(strcmp(q.toString(), "9 -6\n1 18") == 0);
 }
 
@@ -47,14 +42,14 @@ TEST_CASE("Overloaded operators", "[Lab 2]") {
     int k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            a.SetMatrix(i, j, arr_a[k]);
+            a.setMatrix(i, j, arr_a[k]);
 
     Matrix b(2);
     int arr_b[4] = {1, 55, 2, 69};
     k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            b.SetMatrix(i, j, arr_b[k]);
+            b.setMatrix(i, j, arr_b[k]);
 
     Matrix c;
     c = a + b;
@@ -73,13 +68,13 @@ TEST_CASE("Overloaded operators", "[Lab 2]") {
 TEST_CASE("Exceptions tests", "[Lab 6]") {
     Matrix test(2);
     try {
-        test.SetMatrix(5, 9, 76);
+        test.setMatrix(5, 9, 76);
     } catch (exception &ex) {
         REQUIRE(strcmp(ex.what(), "Out of range matrix") == 0);
     }
 
     try {
-        test.GetMatrix(2, 2);
+        test.getMatrix(2, 2);
     } catch (exception &ex) {
         REQUIRE(strcmp(ex.what(), "Out of range matrix") == 0);
     }
@@ -95,14 +90,14 @@ TEST_CASE("Exceptions tests", "[Lab 6]") {
 
     for (int i = 0; i < 2; i++)
         for (int j = 0, k = 0; j < 2; j++, k++)
-            one.SetMatrix(i, j, arr_a[k]);
+            one.setMatrix(i, j, arr_a[k]);
 
     Matrix two(3);
     int arr_b[9] = {28, 1, 0, 55, 2, 21, 69, 5, 47};
 
     for (int i = 0; i < 3; i++)
         for (int j = 0, k = 0; j < 3; j++, k++)
-            two.SetMatrix(i, j, arr_b[k]);
+            two.setMatrix(i, j, arr_b[k]);
     try {
         Matrix three;
         three = one + two;
@@ -121,12 +116,18 @@ TEST_CASE("Exceptions tests", "[Lab 6]") {
 TEST_CASE("I / O streams", "[Lab 3]") {
 
     Matrix a(2);
+    Matrix b(2);
     Matrix c;
     double arr_a[4] = {3, 59, 0, 11};
+    double arr_b[4] = {6, 1, 78, 23};
     int k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            a.SetMatrix(i, j, arr_a[k]);
+            a.setMatrix(i, j, arr_a[k]);
+    k = 0;
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++, k++)
+            b.setMatrix(i, j, arr_b[k]);
 
     ofstream fileIn;
     fileIn.open("../text.txt");
@@ -135,6 +136,7 @@ TEST_CASE("I / O streams", "[Lab 3]") {
         exit(1);
     }
     fileIn << a << endl;
+    fileIn << b << endl;
     fileIn.close();
 
     ifstream fileOut;
@@ -199,17 +201,17 @@ TEST_CASE("Rectangular matrix: Fundamental work", "[Lab 4]") {
     int k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 3; j++, k++)
-            q.SetMatrix(i, j, arr_q[k]);
+            q.setMatrix(i, j, arr_q[k]);
 
     REQUIRE(strcmp(q.toString(), "9 1 -6\n18 3 -1") == 0);
 
     RectangularMatrix A(q);
     REQUIRE(strcmp(A.toString(), q.toString()) == 0);
 
-    REQUIRE(q.GetMatrix(0, 0) == 9);
-    REQUIRE(q.GetMatrix(1, 2) == -1);
+    REQUIRE(q.getMatrix(0, 0) == 9);
+    REQUIRE(q.getMatrix(1, 2) == -1);
 
-    q.TransposeMatrix();
+    q.transposeMatrix();
     REQUIRE(strcmp(q.toString(), "9 18\n1 3\n-6 -1") == 0);
 }
 
@@ -219,14 +221,14 @@ TEST_CASE("Rectangular matrix: Overloaded operators", "[Lab 4]") {
     int k = 0;
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 2; j++, k++)
-            a.SetMatrix(i, j, arr_a[k]);
+            a.setMatrix(i, j, arr_a[k]);
 
     RectangularMatrix b(3, 2);
     int arr_b[6] = {1, 55, 2, 69, 2, -39};
     k = 0;
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 2; j++, k++)
-            b.SetMatrix(i, j, arr_b[k]);
+            b.setMatrix(i, j, arr_b[k]);
 
     RectangularMatrix c;
     c = a + b;
@@ -243,13 +245,13 @@ TEST_CASE("Rectangular matrix: Exceptions", "[Lab 4]") {
 
     RectangularMatrix test(2, 3);
     try {
-        test.SetMatrix(5, 9, 76);
+        test.setMatrix(5, 9, 76);
     } catch (exception &ex) {
         REQUIRE(strcmp(ex.what(), "Out of range matrix") == 0);
     }
 
     try {
-        test.GetMatrix(2, 4);
+        test.getMatrix(2, 4);
     } catch (exception &ex) {
         REQUIRE(strcmp(ex.what(), "Out of range matrix") == 0);
     }
@@ -265,14 +267,14 @@ TEST_CASE("Rectangular matrix: Exceptions", "[Lab 4]") {
 
     for (int i = 0; i < 2; i++)
         for (int j = 0, p = 0; j < 2; j++, p++)
-            one.SetMatrix(i, j, arr_one[p]);
+            one.setMatrix(i, j, arr_one[p]);
 
     RectangularMatrix two(3, 3);
     int arr_two[9] = {28, 1, 0, 55, 2, 21, 69, 5, 47};
 
     for (int i = 0; i < 3; i++)
         for (int j = 0, p = 0; j < 3; j++, p++)
-            two.SetMatrix(i, j, arr_two[p]);
+            two.setMatrix(i, j, arr_two[p]);
 
     try {
         RectangularMatrix three;
@@ -295,14 +297,14 @@ TEST_CASE("Circular queue", "[Lab 5]") {
     int k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            a.SetMatrix(i, j, arr_a[k]);
+            a.setMatrix(i, j, arr_a[k]);
 
     Matrix b(2);
     int arr_b[4] = {1, 55, 2, 69};
     k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            b.SetMatrix(i, j, arr_b[k]);
+            b.setMatrix(i, j, arr_b[k]);
     IdentityMatrix c(2);
     IdentityMatrix d(3);
     RectangularMatrix e(2, 3);
@@ -310,7 +312,7 @@ TEST_CASE("Circular queue", "[Lab 5]") {
     k = 0;
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 3; j++, k++) {
-            e.SetMatrix(i, j, arr_e[k]);
+            e.setMatrix(i, j, arr_e[k]);
         }
     }
     RectangularMatrix f(3, 2);
@@ -318,7 +320,7 @@ TEST_CASE("Circular queue", "[Lab 5]") {
     k = 0;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 2; j++, k++) {
-            f.SetMatrix(i, j, arr_f[k]);
+            f.setMatrix(i, j, arr_f[k]);
         }
     }
 
@@ -396,14 +398,14 @@ TEST_CASE("STL: Stack", "[Lab 8]") {
     int k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            a.SetMatrix(i, j, arr_a[k]);
+            a.setMatrix(i, j, arr_a[k]);
 
     Matrix b(2);
     int arr_b[4] = {1, 55, 2, 69};
     k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            b.SetMatrix(i, j, arr_b[k]);
+            b.setMatrix(i, j, arr_b[k]);
 
     clock_t startTime = clock();
     for (int i = 0; i < 10000; ++i) {
@@ -448,14 +450,14 @@ TEST_CASE("STL: Multiset", "[Lab 8]") {
     int k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            a.SetMatrix(i, j, arr_a[k]);
+            a.setMatrix(i, j, arr_a[k]);
 
     Matrix b(2);
     int arr_b[4] = {1, 55, 2, 69};
     k = 0;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++, k++)
-            b.SetMatrix(i, j, arr_b[k]);
+            b.setMatrix(i, j, arr_b[k]);
 
     startTime = clock();
     for (int i = 0; i < 10000; ++i) {
@@ -467,4 +469,6 @@ TEST_CASE("STL: Multiset", "[Lab 8]") {
     }
     mst2.clear();
     cout << clock() - startTime << endl;
+
+
 }

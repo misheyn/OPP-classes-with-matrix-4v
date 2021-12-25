@@ -18,13 +18,13 @@ public:
 
     ~RectangularMatrix();
 
-    double GetMatrix(int i, int j) const;
+    double getMatrix(int i, int j) const;
 
-    void SetMatrix(int i, int j, double value);
+    void setMatrix(int i, int j, double value);
 
     char *toString();
 
-    void TransposeMatrix();
+    void transposeMatrix();
 
     friend RectangularMatrix operator+(const RectangularMatrix &m_1, const RectangularMatrix &m_2);
 

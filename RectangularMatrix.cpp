@@ -45,13 +45,13 @@ RectangularMatrix::~RectangularMatrix() {
     delete[] matrix;
 }
 
-double RectangularMatrix::GetMatrix(int i, int j) const {
+double RectangularMatrix::getMatrix(int i, int j) const {
     if (i >= rows || j >= columns || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
     return matrix[i][j];
 }
 
-void RectangularMatrix::SetMatrix(int i, int j, double value) {
+void RectangularMatrix::setMatrix(int i, int j, double value) {
     if (i >= rows || j >= columns || i < 0 || j < 0)
         throw out_of_range("Out of range matrix");
     matrix[i][j] = value;
@@ -80,7 +80,7 @@ char *RectangularMatrix::toString() {
     return buf;
 }
 
-void RectangularMatrix::TransposeMatrix() {
+void RectangularMatrix::transposeMatrix() {
     RectangularMatrix other(columns, rows);
     for (int i = 0; i < columns; i++) {
         for (int j = 0; j < rows; j++) {

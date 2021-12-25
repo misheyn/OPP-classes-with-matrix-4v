@@ -1,11 +1,8 @@
-//
-// Created by Amalia on 09.09.2021.
-//
-
 #ifndef LAB1_3_MATRIX_H
 #define LAB1_3_MATRIX_H
 
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -14,19 +11,19 @@ class Matrix {
 public:
     Matrix();
 
-    Matrix(int order);
+    explicit Matrix(int order);
 
     Matrix(const Matrix &obj);
 
     ~Matrix();
 
-    virtual double GetMatrix(int i, int j) const;
+    virtual double getMatrix(int i, int j) const;
 
-    virtual void SetMatrix(int i, int j, double value);
+    virtual void setMatrix(int i, int j, double value);
 
     virtual char *toString();
 
-    virtual void TransposeMatrix();
+    virtual void transposeMatrix();
 
     friend Matrix operator+(const Matrix &m_1, const Matrix &m_2);
 

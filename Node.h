@@ -1,7 +1,3 @@
-//
-// Created by Amalia on 28.10.2021.
-//
-
 #ifndef LAB1_3_NODE_H
 #define LAB1_3_NODE_H
 
@@ -14,7 +10,7 @@ struct node {
     node *next;
     T &obj;
 
-    node(T &elem) : prev(nullptr), next(nullptr), obj(elem) {}
+    explicit node(T &elem) : prev(nullptr), next(nullptr), obj(elem) {}
 
 };
 
