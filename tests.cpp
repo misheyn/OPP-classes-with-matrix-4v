@@ -400,32 +400,28 @@ TEST_CASE("STL: Stack", "[Lab 8]") {
         for (int j = 0; j < 2; j++, k++)
             a.setMatrix(i, j, arr_a[k]);
 
-    Matrix b(2);
-    int arr_b[4] = {1, 55, 2, 69};
-    k = 0;
-    for (int i = 0; i < 2; i++)
-        for (int j = 0; j < 2; j++, k++)
-            b.setMatrix(i, j, arr_b[k]);
-
     clock_t startTime = clock();
-    for (int i = 0; i < 10000; ++i) {
+    for (int i = 0; i < 2000000; ++i) {
         st1.push(a);
-        st1.push(b);
     }
-    for (int i = 0; i < 20000; ++i) {
+    cout << "[Matrix] add: " << clock() - startTime << endl;
+    startTime = clock();
+    for (int i = 0; i < 2000000; ++i) {
         st1.pop();
     }
-    cout << clock() - startTime << endl;
+    cout << "[Matrix] remove: " << clock() - startTime << endl;
 
     stack<int> st2;
     startTime = clock();
     for (int i = 0; i < 10000; ++i) {
         st2.push(i);
     }
+    cout << "[int] add: " << clock() - startTime << endl;
+    startTime = clock();
     for (int i = 0; i < 10000; ++i) {
         st2.pop();
     }
-    cout << clock() - startTime << endl;
+    cout << "[int] remove: " << clock() - startTime << endl;
 }
 
 TEST_CASE("STL: Multiset", "[Lab 8]") {
@@ -442,9 +438,9 @@ TEST_CASE("STL: Multiset", "[Lab 8]") {
         mst1.find(*it);
     }
     mst1.clear();
-    cout << clock() - startTime << endl;
+    cout << "[int] insert, find, clear: " << clock() - startTime << endl;
 
-    multiset <Matrix> mst2;
+    multiset<Matrix> mst2;
     Matrix a(2);
     int arr_a[4] = {3, 7, 12, 9};
     int k = 0;
@@ -452,23 +448,16 @@ TEST_CASE("STL: Multiset", "[Lab 8]") {
         for (int j = 0; j < 2; j++, k++)
             a.setMatrix(i, j, arr_a[k]);
 
-    Matrix b(2);
-    int arr_b[4] = {1, 55, 2, 69};
-    k = 0;
-    for (int i = 0; i < 2; i++)
-        for (int j = 0; j < 2; j++, k++)
-            b.setMatrix(i, j, arr_b[k]);
-
     startTime = clock();
-    for (int i = 0; i < 10000; ++i) {
+    for (int i = 0; i < 2000000; ++i) {
         mst2.insert(a);
     }
+    cout << "[Matrix] insert: " << clock() - startTime << endl;
+    startTime = clock();
     auto itt = mst2.begin();
-    for (; it != mst1.end(); it++) {
+    for (; itt != mst2.end(); itt++) {
         mst2.find(*itt);
     }
+    cout << "[Matrix] find: " << clock() - startTime << endl;
     mst2.clear();
-    cout << clock() - startTime << endl;
-
-
 }
